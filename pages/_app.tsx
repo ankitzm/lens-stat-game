@@ -3,7 +3,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import Head from 'next/head';
 import { getDefaultWallets, RainbowKitProvider, ConnectButton } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, useAccount, useSignMessage, WagmiConfig } from 'wagmi';
 import {
   arbitrum,
   goerli,
@@ -14,6 +14,8 @@ import {
   zora,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { authenticate, generateChallenge } from './../utils/utils';
+import { useState } from 'react';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -43,6 +45,30 @@ const wagmiConfig = createConfig({
 
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  // const { data } = useAccount();
+  // const address = data?.address;
+  // const connected = !!data?.address;
+  // const { signMessageAsync } = useSignMessage();
+  // const [signedIn, setSignedIn] = useState(false);
+
+  // const signIn = async () => {
+  //   try {
+  //     if (!connected) {
+  //       return alert('Please connect your wallet first');
+  //     }
+  //     const challenge = await generateChallenge(address);
+  //     const signature = await signMessageAsync({ message: challenge });
+  //     const accessToken = await authenticate(address, signature);
+  //     console.log({ accessToken });
+  //     window.sessionStorage.setItem('accessToken', accessToken);
+  //     setSignedIn(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert('Error signing in');
+  //   }
+  // };
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
